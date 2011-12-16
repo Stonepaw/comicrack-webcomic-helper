@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WebComicHelper>
+  <ImageRegex>&lt;img\s(?=[^&lt;&gt;]*?(?:id|class)\s*=\s*(?([&quot;&apos;])[&quot;&apos;][^&quot;&apos;&lt;&gt;]*?(?:comic|strip)[^&quot;&apos;&lt;&gt;]*?[&quot;&apos;]|[^\s&lt;&gt;]*?(?:comic|strip)[^\s&lt;&gt;]*?(?=[\s&lt;&gt;])))[^&lt;&gt;]*?src\s*=\s*(?([&apos;&quot;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;[^\s&lt;&gt;]+))</ImageRegex>
+  <ImageRegex>&lt;div\s[^&lt;&gt;]*(?:class|id)\s*=\s*(?([&quot;&apos;])[&quot;&apos;](?:comic|story|field)[-_\s]?(?:pane|page|content|item)?[&quot;&apos;]|(?:comic|story|field)[-_\s]?(?:pane|page|content|item)?(?=[\s&lt;&gt;]))[^&lt;&gt;]*&gt;(?s:.*?)&lt;img\s[^&lt;&gt;]*src\s*=\s*(?([&apos;&quot;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;[^\s&lt;&gt;]+))</ImageRegex>
+  <LinkRegex>&lt;div\s[^&lt;&gt;]*(?:class|id)\s*=\s*(?([&quot;&apos;])[&quot;&apos;](?:navbar)?[-_\s]?(?:next)[&quot;&apos;]|(?:navbar)?[-_\s]?(?:next)(?=[\s&lt;&gt;]))[^&lt;&gt;]*&gt;(?s:.*?)&lt;a\s[^&lt;&gt;]*href\s*=\s*(?([&apos;&quot;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;[^\s&lt;&gt;]+))</LinkRegex>
+  <LinkRegex>&lt;a\s(?=[^&lt;&gt;]*?(?:id|class|rel)\s*=\s*(?([&quot;&apos;])[&quot;&apos;](?:navi)?[-_\s]?(?:navi)?[-_\s]?(?:next)[&quot;&apos;]|(?:navi)?[-_\s]?(?:navi)?[-_\s]?(?:next)(?=[\s&lt;&gt;])))[^&lt;&gt;]*?href\s*=\s*(?([&apos;&quot;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;[^\s&lt;&gt;]+))</LinkRegex>
+  <LinkRegex>&lt;a\s[^&lt;&gt;]*?href\s*=\s*(?([&apos;&quot;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;[^\s&lt;&gt;]+))[^&lt;&gt;]*?&gt;next</LinkRegex>
+  <LinkRegex>&lt;a\s[^&lt;&gt;]*?href\s*=\s*(?([&apos;&quot;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;[^\s&lt;&gt;]+))[^&lt;&gt;]*?&gt;[\s\n\r\t]*&lt;img\s[^&lt;&gt;]*(?:alt|title)\s*=\s*(?([&quot;&apos;])[&quot;&apos;]next[-_\s]?(?:comic)?[&quot;&apos;]|next[-_\s]?(?:comic)?(?=[\s&lt;&gt;]))</LinkRegex>
+  <Site>
+    <Domain>www.citymanga.com</Domain>
+    <ImageRegex>&lt;img\s(?=[^&lt;&gt;]*class\s*=\s*[&quot;&apos;]?image[&quot;&apos;]?)[^&lt;&gt;]*src\s*=\s*(?([&quot;&apos;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;\S+))</ImageRegex>
+    <LinkRegex>&lt;input(?=[^&lt;&gt;]*id\s*=\s*[&quot;&apos;]?nextbutton[&quot;&apos;]?)[^&lt;&gt;]*onclick=&quot;javascript:window.location\s?=\s?&apos;(?&lt;link&gt;[^&quot;&apos;]+?)&apos;;&quot;</LinkRegex>
+  </Site>
+  <Site>
+    <Domain>www.drunkduck.com</Domain>
+    <ImageRegex>&lt;img(?=[^&lt;&gt;]*class\s*=\s*[&quot;&apos;]?page-image[&quot;&apos;]?)[^&lt;&gt;]*src\s*=\s*(?([&quot;&apos;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;\S+))</ImageRegex>
+    <LinkRegex>href=(?([&quot;&apos;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;\S+))[^&lt;&gt;]*&gt;[\s\n\r\t]*&lt;img\s[^&lt;&gt;]*class\s*=\s*[&quot;&apos;]?arrow_next[&quot;&apos;]?</LinkRegex>
+  </Site>
+  <Site>
+    <Domain>www.mangafox.com</Domain>
+    <ImageRegex>&lt;img(?=[^&lt;&gt;]*id\s*=\s*[&quot;&apos;]?image[&quot;&apos;]?)[^&lt;&gt;]*src\s*=\s*(?([&quot;&apos;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;\S+))</ImageRegex>
+    <LinkRegex>(?([^&lt;&gt;]*(?&lt;!onclick\s*=\s*[&quot;&apos;]?next_chapter\(\)[&quot;&apos;]?)\sclass\s*=\s*[&quot;&apos;](?:button|btn)\snext_page[&quot;&apos;][^&lt;&gt;]*)href\s*=\s*(?([&quot;&apos;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;\S+))|&lt;span&gt;Next\sChapter:&lt;/span&gt;[\s\n\r\t]*&lt;a\s[^&lt;&gt;]*href\s*=\s*(?([&quot;&apos;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;\S+)))</LinkRegex>
+  </Site>
+  <Site>
+    <Domain>www.mangareader.net</Domain>
+    <ImageRegex>&lt;img(?=[^&lt;&gt;]*id\s*=\s*[&quot;&apos;]?img[&quot;&apos;]?)[^&lt;&gt;]*src\s*=\s*(?([&quot;&apos;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;\S+))</ImageRegex>
+    <LinkRegex>&lt;span\s[^&lt;&gt;]*class\s*=\s*[&quot;&apos;]?next[&quot;&apos;]?[^&lt;&gt;]*&gt;[\s\n\r\t]*&lt;a\s[^&lt;&gt;]*href\s*=\s*(?([&quot;&apos;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;\S+))</LinkRegex>
+  </Site>
+  <Site>
+    <Domain>www.webtoonlive.com</Domain>
+    <ImageRegex>&lt;img\s(?=[^&lt;&gt;]*oncontextmenu\s*=\s*[&quot;&apos;]return\sfalse[&quot;&apos;])[^&lt;&gt;]*src\s*=\s*(?([&quot;&apos;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;\S+))</ImageRegex>
+    <LinkRegex>href\s*=\s*(?([&quot;&apos;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;\S+))[^&lt;&gt;]*&gt;[\s\n\r\t]*&lt;[^&lt;&gt;]*alt=[&quot;&apos;]Next\swebcomic\schapter[&quot;&apos;]</LinkRegex>
+  </Site>
+  <Site>
+    <Domain>www.act-i-vate.com/index</Domain>
+    <ImageRegex>&lt;img\s(?=[^&lt;&gt;]*alt\s*=\s*[&quot;&apos;]comic\spage[&quot;&apos;])[^&lt;&gt;]*src\s*=\s*(?([&quot;&apos;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;[^\s&lt;&gt;]+))</ImageRegex>
+    <LinkRegex>&lt;a\s(?=[^&lt;&gt;]*title\s*=\s*[&quot;&apos;]forward\sone\spage[&quot;&apos;])[^&lt;&gt;]*href\s*=\s*(?([&quot;&apos;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;[^\s&lt;&gt;]+))</LinkRegex>
+  </Site>
+  <Site>
+    <Domain>www.gocomics.com</Domain>
+    <ImageRegex>&lt;p\s[^&lt;&gt;]*class\s*=\s*(?([&quot;&apos;])[&quot;&apos;]feature_item[&quot;&apos;]|feature_item(?=[\s&lt;&gt;]))[^&lt;&gt;]*&gt;(?:&lt;a\s[^&lt;&gt;]*&gt;|[\s\n\r\t])*&lt;img\s(?=[^&lt;&gt;]*class\s*=\s*(?([&quot;&apos;])[&quot;&apos;]strip[&quot;&apos;]|strip(?=[\s&lt;&gt;])))[^&lt;&gt;]*src\s*=\s*(?([&quot;&apos;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;[^\s&lt;&gt;]+))</ImageRegex>
+    <LinkRegex>&lt;a\s(?=[^&lt;&gt;]*class\s*=\s*(?([&quot;&apos;])[&quot;&apos;]next[&quot;&apos;]|next(?=[\s&lt;&gt;])))[^&lt;&gt;]*href\s*=\s*(?([&quot;&apos;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;[^\s&lt;&gt;]+))[^&lt;&gt;]*&gt;[\s\n\r\t]*Next\sfeature[\s\n\r\t]*&lt;/a&gt;</LinkRegex>
+  </Site>
+</WebComicHelper>
