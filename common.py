@@ -23,12 +23,17 @@ import System
 
 clr.AddReference("System.Xml")
 clr.AddReference("System.Windows.Forms")
+clr.AddReference("System.Drawing")
+
+from System import Convert
 
 from System.Xml import XmlWriter, XmlWriterSettings
 
 from System.Windows.Forms import MessageBox, MessageBoxButtons, MessageBoxIcon
 
 from System.IO import FileInfo, Path
+
+from System.Drawing import Color, ColorTranslator
 
 SCIRPT_DIRECTORY = FileInfo(__file__).DirectoryName
 
@@ -55,6 +60,7 @@ class WebComicHelperResultEnum(object):
     Success = 4
 
 
+
 class LinkRegex(object):
         
     def __init__(self, regex):
@@ -62,11 +68,13 @@ class LinkRegex(object):
         self._matches = 0
 
 
+
 class ImageRegex(object):
         
     def __init__(self, regex):
         self._regex = regex
         self._matches = 0
+
 
 
 class SiteRegex(object):
@@ -77,17 +85,20 @@ class SiteRegex(object):
         self._domain = domain
 
 
+
 class NextPageLinkFormResult(object):
     def __init__(self, text, isimage):
         self.is_image = isimage
         self.text = text
 
 
+
 class WebComic(object):
 
-    def __init__(self, info, starturl, helper_result):
+    def __init__(self, info, compositing, starturl, helper_result):
         """Info should be a dict of all the info"""
         self._info = info
+        self._compositing = compositing
         self._start_url = starturl
         self._image_regex = helper_result._image_regex
         self._link_regex = helper_result._link_regex
@@ -100,7 +111,7 @@ class WebComic(object):
         xsettings.Indent = True
         try:
             xmlwriter = XmlWriter.Create(filepath, xsettings)
-        # \\TODO: Do something
+
         except (System.UnauthorizedAccessException, System.IO.IOException), ex:
             MessageBox.Show("An error occured trying to create the cbw file. The error was:\n\n" + ex.Message + "\n\nTry again with a different file path", 
                             "Could not create cbw", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -109,6 +120,7 @@ class WebComic(object):
         with xmlwriter:
             xmlwriter.WriteStartElement("WebComic")
             self._write_info(xmlwriter)
+            self._compositing.write_to_xml(xmlwriter)
             self._write_regex(xmlwriter)
             xmlwriter.WriteEndElement()
 
@@ -133,4 +145,41 @@ class WebComic(object):
         xmlwriter.WriteElementString("Part", self._link_regex)
         xmlwriter.WriteEndElement()
         xmlwriter.WriteEndElement()
+        xmlwriter.WriteEndElement()
+
+
+
+class WebComicCompositing(object):
+    
+    def __init__(self, use_rows_and_columns, value1, value2, color, border, right_to_left):
+        """
+        use_rows_and_columns is a bool. True if using columns, False if using height and width.
+        value1 is the rows or height.
+        value2 is the columns or width.
+        color is the background color to use.
+        border is the borderwidth to use.
+        """
+        self._use_rows_and_columns = use_rows_and_columns
+        self._value1 = value1
+        self._value2 = value2
+        self._color = color
+        self._border_width = border
+        self._right_to_left = right_to_left == "Yes"
+
+
+    def write_to_xml(self, xmlwriter):
+        xmlwriter.WriteStartElement("Compositing")
+        if self._use_rows_and_columns and self._value1 > 1 and self._value2 > 1:
+            xmlwriter.WriteAttributeString("Rows", str(self._value1))
+            xmlwriter.WriteAttributeString("Columns", str(self._value2))
+        elif not self._use_rows_and_columns:
+            xmlwriter.WriteAttributeString("PageHeight", str(self._value1))
+            xmlwriter.WriteAttributeString("PageWidth", str(self._value2))
+        if self._right_to_left:
+            #Rather oddly ComicRack only loads right to left if the bool is in lower case.
+            xmlwriter.WriteAttributeString("RightToLeft", str(self._right_to_left).lower())
+        xmlwriter.WriteAttributeString("BorderWidth", str(self._border_width))
+        if self._color != Color.White:
+            xmlwriter.WriteAttributeString("BackgroundColor", ColorTranslator.ToHtml(self._color))
+
         xmlwriter.WriteEndElement()

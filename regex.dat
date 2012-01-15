@@ -22,9 +22,19 @@
     <LinkRegex>(?([^&lt;&gt;]*(?&lt;!onclick\s*=\s*[&quot;&apos;]?next_chapter\(\)[&quot;&apos;]?)\sclass\s*=\s*[&quot;&apos;](?:button|btn)\snext_page[&quot;&apos;][^&lt;&gt;]*)href\s*=\s*(?([&quot;&apos;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;\S+))|&lt;span&gt;Next\sChapter:&lt;/span&gt;[\s\n\r\t]*&lt;a\s[^&lt;&gt;]*href\s*=\s*(?([&quot;&apos;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;\S+)))</LinkRegex>
   </Site>
   <Site>
+    <Domain>www.mangahere.com</Domain>
+    <ImageRegex>&lt;img(?=[^&lt;&gt;]*id\s*=\s*[&quot;&apos;]?image[&quot;&apos;]?)[^&lt;&gt;]*src\s*=\s*(?([&quot;&apos;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;\S+))</ImageRegex>
+    <LinkRegex>(?([^&lt;&gt;]*(?&lt;!onclick\s*=\s*[&quot;&apos;]?next_chapter\(\)[&quot;&apos;]?)\sclass\s*=\s*[&quot;&apos;]next_page[&quot;&apos;][^&lt;&gt;]*)href\s*=\s*(?([&quot;&apos;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;\S+))|&lt;strong&gt;Next\sChapter:&lt;/strong&gt;[\s\n\r\t]*&lt;a\s[^&lt;&gt;]*href\s*=\s*(?([&quot;&apos;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;\S+)))</LinkRegex>
+  </Site>
+  <Site>
     <Domain>www.mangareader.net</Domain>
     <ImageRegex>&lt;img(?=[^&lt;&gt;]*id\s*=\s*[&quot;&apos;]?img[&quot;&apos;]?)[^&lt;&gt;]*src\s*=\s*(?([&quot;&apos;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;\S+))</ImageRegex>
     <LinkRegex>&lt;span\s[^&lt;&gt;]*class\s*=\s*[&quot;&apos;]?next[&quot;&apos;]?[^&lt;&gt;]*&gt;[\s\n\r\t]*&lt;a\s[^&lt;&gt;]*href\s*=\s*(?([&quot;&apos;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;\S+))</LinkRegex>
+  </Site>
+  <Site>
+    <Domain>submanga.com</Domain>
+    <ImageRegex>&lt;div&gt;[\s\n\r\t]*(?:&lt;a\s[^&lt;&gt;]*&gt;[\s\n\r\t]*)?&lt;img\s[^&lt;&gt;]*src\s*=\s*(?([&quot;&apos;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;[^\s&lt;&gt;]+))[^&lt;&gt;]*&gt;(?:&lt;/a&gt;)?&lt;/div&gt;</ImageRegex>
+    <LinkRegex>&lt;a\s[^&lt;&gt;]*href\s*=\s*(?([&quot;&apos;])[&quot;&apos;](?&lt;link&gt;[^&quot;&apos;]+)[&quot;&apos;]|(?&lt;link&gt;[^\s&lt;&gt;]+)\s)[^&lt;&gt;]*&gt;[\s\n\r\t]*&lt;img\s[^&lt;&gt;]*src\s*=\s*[&quot;&apos;](?:http://submanga.com|\.)/s/hdr\.gif[&quot;&apos;]?</LinkRegex>
   </Site>
   <Site>
     <Domain>www.webtoonlive.com</Domain>
