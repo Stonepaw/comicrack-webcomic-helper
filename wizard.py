@@ -41,6 +41,8 @@ from common import WebComicHelperResultEnum, NextPageLinkFormResult, WebComic, H
 
 from forms import NextPageLink, SecondImageUrl
 
+
+
 class WebComicHelperWizard(Form):
 
 
@@ -48,6 +50,7 @@ class WebComicHelperWizard(Form):
         self.InitializeComponent()
 
         self._info_textboxes = [self._Writer, self._Penciler, self._Inker, self._Colorist, self._Summary]
+        self._compositing = None
 
     
     def InitializeComponent(self):
@@ -90,39 +93,15 @@ class WebComicHelperWizard(Form):
         self._label16 = System.Windows.Forms.Label()
         self._label17 = System.Windows.Forms.Label()
         self._label19 = System.Windows.Forms.Label()
+        self._display_options = System.Windows.Forms.Button()
         self._background_worker = BackgroundWorker()
         self._open_webcomic = System.Windows.Forms.CheckBox()
-        self._wpCompositing = CristiPotlog.Controls.WizardPage()
-        self._use_columns_and_rows = System.Windows.Forms.RadioButton()
-        self._use_height_and_width = System.Windows.Forms.RadioButton()
-        self._columns = System.Windows.Forms.NumericUpDown()
-        self._color_dialog = System.Windows.Forms.ColorDialog()
-        self._rows = System.Windows.Forms.NumericUpDown()
-        self._height = System.Windows.Forms.NumericUpDown()
-        self._width = System.Windows.Forms.NumericUpDown()
-        self._colums_label = System.Windows.Forms.Label()
-        self._rows_label = System.Windows.Forms.Label()
-        self._height_label = System.Windows.Forms.Label()
-        self._width_label = System.Windows.Forms.Label()
-        self._background_color_button = System.Windows.Forms.Button()
-        self._background_color_preview = System.Windows.Forms.Panel()
-        self._border_width_label = System.Windows.Forms.Label()
-        self._right_to_left_label = System.Windows.Forms.Label()
-        self._background_color_label = System.Windows.Forms.Label()
-        self._right_to_left = System.Windows.Forms.ComboBox()
-        self._border_width = System.Windows.Forms.NumericUpDown()
         self._wizard.SuspendLayout()
         self._wpURL.SuspendLayout()
         self._wpInfo.SuspendLayout()
         self._wpFailedImage.SuspendLayout()
         self._wpFaliedLink.SuspendLayout()
         self._wpProgress.SuspendLayout()
-        self._wpCompositing.SuspendLayout()
-        self._columns.BeginInit()
-        self._rows.BeginInit()
-        self._height.BeginInit()
-        self._width.BeginInit()
-        self._border_width.BeginInit()
         self.SuspendLayout()
         # 
         # wizard
@@ -133,14 +112,12 @@ class WebComicHelperWizard(Form):
         self._wizard.Controls.Add(self._wpInfo)
         self._wizard.Controls.Add(self._wpProgress)
         self._wizard.Controls.Add(self._wpURL)
-        self._wizard.Controls.Add(self._wpCompositing)
         self._wizard.Location = System.Drawing.Point(0, 0)
         self._wizard.HeaderImage = Image.FromFile(HEADER_IMAGE)
         self._wizard.Pages.AddRange(System.Array[CristiPotlog.Controls.WizardPage](
             [self._wpURL,
             self._wpProgress,
             self._wpInfo,
-            self._wpCompositing,
             self._wpFinished,
             self._wpFailedImage,
             self._wpFaliedLink]))
@@ -202,6 +179,7 @@ class WebComicHelperWizard(Form):
         self._wpInfo.Controls.Add(self._label4)
         self._wpInfo.Controls.Add(self._label3)
         self._wpInfo.Controls.Add(self._webcomic_name)
+        self._wpInfo.Controls.Add(self._display_options)
         self._wpInfo.Description = "Enter any desired information"
         self._wpInfo.Location = System.Drawing.Point(0, 0)
         self._wpInfo.Name = "wpInfo"
@@ -226,14 +204,14 @@ class WebComicHelperWizard(Form):
         # label4
         # 
         self._label4.AutoSize = True
-        self._label4.Location = System.Drawing.Point(12, 147)
+        self._label4.Location = System.Drawing.Point(12, 119)
         self._label4.Name = "label4"
         self._label4.Size = System.Drawing.Size(38, 13)
         self._label4.Text = "Writer:"
         # 
         # Writer
         # 
-        self._Writer.Location = System.Drawing.Point(56, 143)
+        self._Writer.Location = System.Drawing.Point(56, 115)
         self._Writer.Name = "Writer"
         self._Writer.Size = System.Drawing.Size(140, 20)
         self._Writer.TabIndex = 1
@@ -242,14 +220,14 @@ class WebComicHelperWizard(Form):
         # label6
         # 
         self._label6.AutoSize = True
-        self._label6.Location = System.Drawing.Point(258, 175)
+        self._label6.Location = System.Drawing.Point(258, 147)
         self._label6.Name = "label6"
         self._label6.Size = System.Drawing.Size(44, 13)
         self._label6.Text = "Colorist:"
         # 
         # Penciler
         # 
-        self._Penciler.Location = System.Drawing.Point(312, 143)
+        self._Penciler.Location = System.Drawing.Point(312, 115)
         self._Penciler.Name = "Penciler"
         self._Penciler.Size = System.Drawing.Size(139, 20)
         self._Penciler.TabIndex = 2
@@ -258,14 +236,14 @@ class WebComicHelperWizard(Form):
         # label7
         # 
         self._label7.AutoSize = True
-        self._label7.Location = System.Drawing.Point(12, 256)
+        self._label7.Location = System.Drawing.Point(12, 228)
         self._label7.Name = "label7"
         self._label7.Size = System.Drawing.Size(53, 13)
         self._label7.Text = "Summary:"
         # 
         # Summary
         # 
-        self._Summary.Location = System.Drawing.Point(12, 272)
+        self._Summary.Location = System.Drawing.Point(12, 244)
         self._Summary.Multiline = True
         self._Summary.Name = "Summary"
         self._Summary.Size = System.Drawing.Size(506, 82)
@@ -275,7 +253,7 @@ class WebComicHelperWizard(Form):
         # label8
         # 
         self._label8.AutoSize = True
-        self._label8.Location = System.Drawing.Point(258, 146)
+        self._label8.Location = System.Drawing.Point(258, 118)
         self._label8.Name = "label8"
         self._label8.Size = System.Drawing.Size(48, 13)
         self._label8.Text = "Penciller:"
@@ -283,14 +261,14 @@ class WebComicHelperWizard(Form):
         # label9
         # 
         self._label9.AutoSize = True
-        self._label9.Location = System.Drawing.Point(12, 175)
+        self._label9.Location = System.Drawing.Point(12, 147)
         self._label9.Name = "label9"
         self._label9.Size = System.Drawing.Size(34, 13)
         self._label9.Text = "Inker:"
         # 
         # Inker
         # 
-        self._Inker.Location = System.Drawing.Point(57, 171)
+        self._Inker.Location = System.Drawing.Point(57, 143)
         self._Inker.Name = "Inker"
         self._Inker.Size = System.Drawing.Size(139, 20)
         self._Inker.TabIndex = 3
@@ -298,7 +276,7 @@ class WebComicHelperWizard(Form):
         # 
         # Colorist
         # 
-        self._Colorist.Location = System.Drawing.Point(312, 171)
+        self._Colorist.Location = System.Drawing.Point(312, 143)
         self._Colorist.Name = "Colorist"
         self._Colorist.Size = System.Drawing.Size(139, 20)
         self._Colorist.TabIndex = 4
@@ -307,7 +285,7 @@ class WebComicHelperWizard(Form):
         # label11
         # 
         self._label11.AutoSize = True
-        self._label11.Location = System.Drawing.Point(12, 219)
+        self._label11.Location = System.Drawing.Point(12, 191)
         self._label11.Name = "label11"
         self._label11.Size = System.Drawing.Size(43, 13)
         self._label11.Text = "Manga:"
@@ -321,7 +299,7 @@ class WebComicHelperWizard(Form):
             "No",
             "Yes",
             "Yes (Right to Left)"]))
-        self._Manga.Location = System.Drawing.Point(57, 215)
+        self._Manga.Location = System.Drawing.Point(57, 187)
         self._Manga.Name = "Manga"
         self._Manga.Size = System.Drawing.Size(99, 21)
         self._Manga.TabIndex = 5
@@ -330,7 +308,7 @@ class WebComicHelperWizard(Form):
         # label10
         # 
         self._label10.AutoSize = True
-        self._label10.Location = System.Drawing.Point(180, 219)
+        self._label10.Location = System.Drawing.Point(180, 191)
         self._label10.Name = "label10"
         self._label10.Size = System.Drawing.Size(77, 13)
         self._label10.Text = "Black & White:"
@@ -344,11 +322,21 @@ class WebComicHelperWizard(Form):
             ["",
             "No",
             "Yes"]))
-        self._BlackAndWhite.Location = System.Drawing.Point(263, 215)
+        self._BlackAndWhite.Location = System.Drawing.Point(263, 187)
         self._BlackAndWhite.Name = "BlackAndWhite"
         self._BlackAndWhite.Size = System.Drawing.Size(80, 21)
         self._BlackAndWhite.TabIndex = 6
         self._BlackAndWhite.Tag = "BlackAndWhite"
+        # 
+        # display_options
+        # 
+        self._display_options.Location = System.Drawing.Point(414, 332)
+        self._display_options.Name = "display_options"
+        self._display_options.Size = System.Drawing.Size(103, 23)
+        self._display_options.TabIndex = 20
+        self._display_options.Text = "Display Options"
+        self._display_options.UseVisualStyleBackColor = True
+        self._display_options.Click += self.get_compositing
         # 
         # saveFileDialog
         # 
@@ -519,184 +507,6 @@ class WebComicHelperWizard(Form):
         self._background_worker.ProgressChanged += self.worker_progress_changed
         self._background_worker.RunWorkerCompleted += self.worker_completed
         # 
-        # wpDisplay
-        # 
-        self._wpCompositing.Controls.Add(self._border_width)
-        self._wpCompositing.Controls.Add(self._right_to_left)
-        self._wpCompositing.Controls.Add(self._background_color_label)
-        self._wpCompositing.Controls.Add(self._right_to_left_label)
-        self._wpCompositing.Controls.Add(self._border_width_label)
-        self._wpCompositing.Controls.Add(self._background_color_preview)
-        self._wpCompositing.Controls.Add(self._background_color_button)
-        self._wpCompositing.Controls.Add(self._width_label)
-        self._wpCompositing.Controls.Add(self._height_label)
-        self._wpCompositing.Controls.Add(self._rows_label)
-        self._wpCompositing.Controls.Add(self._colums_label)
-        self._wpCompositing.Controls.Add(self._width)
-        self._wpCompositing.Controls.Add(self._height)
-        self._wpCompositing.Controls.Add(self._rows)
-        self._wpCompositing.Controls.Add(self._columns)
-        self._wpCompositing.Controls.Add(self._use_height_and_width)
-        self._wpCompositing.Controls.Add(self._use_columns_and_rows)
-        self._wpCompositing.Description = "Choose how the webcomic images are displayed"
-        self._wpCompositing.Location = System.Drawing.Point(0, 0)
-        self._wpCompositing.Name = "wpDisplay"
-        self._wpCompositing.Size = System.Drawing.Size(531, 366)
-        self._wpCompositing.TabIndex = 0
-        self._wpCompositing.Title = "Compositing"
-        # 
-        # use_columns_and_rows
-        # 
-        self._use_columns_and_rows.Checked = True
-        self._use_columns_and_rows.Location = System.Drawing.Point(12, 78)
-        self._use_columns_and_rows.Name = "use_columns_and_rows"
-        self._use_columns_and_rows.Size = System.Drawing.Size(175, 24)
-        self._use_columns_and_rows.TabIndex = 0
-        self._use_columns_and_rows.TabStop = True
-        self._use_columns_and_rows.Text = "Use columns and rows"
-        self._use_columns_and_rows.UseVisualStyleBackColor = True
-        self._use_columns_and_rows.CheckedChanged += self.change_composite_method
-        # 
-        # use_height_and_width
-        # 
-        self._use_height_and_width.Location = System.Drawing.Point(12, 144)
-        self._use_height_and_width.Name = "use_height_and_width"
-        self._use_height_and_width.Size = System.Drawing.Size(300, 24)
-        self._use_height_and_width.TabIndex = 5
-        self._use_height_and_width.Text = "Use height and width (use only if absolutely required)"
-        self._use_height_and_width.UseVisualStyleBackColor = True
-        self._use_height_and_width.CheckedChanged += self.change_composite_method
-        # 
-        # columns
-        # 
-        self._columns.Location = System.Drawing.Point(115, 108)
-        self._columns.Name = "columns"
-        self._columns.Size = System.Drawing.Size(38, 20)
-        self._columns.TabIndex = 2
-        self._columns.Minimum = 1
-        # 
-        # rows
-        # 
-        self._rows.Location = System.Drawing.Point(259, 108)
-        self._rows.Name = "rows"
-        self._rows.Size = System.Drawing.Size(38, 20)
-        self._rows.TabIndex = 4
-        self._rows.Minimum = 1
-        # 
-        # height
-        # 
-        self._height.Location = System.Drawing.Point(143, 174)
-        self._height.Maximum = 10000
-        self._height.Name = "height"
-        self._height.Size = System.Drawing.Size(72, 20)
-        self._height.TabIndex = 7
-        self._height.Enabled = False
-        # 
-        # width
-        # 
-        self._width.Location = System.Drawing.Point(342, 174)
-        self._width.Maximum = 10000
-        self._width.Name = "width"
-        self._width.Size = System.Drawing.Size(72, 20)
-        self._width.TabIndex = 9
-        self._width.Enabled = False
-        # 
-        # colums_label
-        # 
-        self._colums_label.Location = System.Drawing.Point(56, 110)
-        self._colums_label.Name = "colums_label"
-        self._colums_label.Size = System.Drawing.Size(53, 18)
-        self._colums_label.TabIndex = 1
-        self._colums_label.Text = "Columns:"
-        # 
-        # rows_label
-        # 
-        self._rows_label.Location = System.Drawing.Point(215, 110)
-        self._rows_label.Name = "rows_label"
-        self._rows_label.Size = System.Drawing.Size(40, 18)
-        self._rows_label.TabIndex = 3
-        self._rows_label.Text = "Rows:"
-        # 
-        # height_label
-        # 
-        self._height_label.Location = System.Drawing.Point(56, 176)
-        self._height_label.Name = "height_label"
-        self._height_label.Size = System.Drawing.Size(81, 17)
-        self._height_label.TabIndex = 6
-        self._height_label.Text = "Height (pixels):"
-        self._height_label.Enabled = False
-        # 
-        # width_label
-        # 
-        self._width_label.Location = System.Drawing.Point(259, 176)
-        self._width_label.Name = "width_label"
-        self._width_label.Size = System.Drawing.Size(77, 18)
-        self._width_label.TabIndex = 8
-        self._width_label.Text = "Width (pixels):"
-        self._width_label.Enabled = False
-        # 
-        # background_color_button
-        # 
-        self._background_color_button.Location = System.Drawing.Point(141, 224)
-        self._background_color_button.Name = "background_color_button"
-        self._background_color_button.Size = System.Drawing.Size(75, 23)
-        self._background_color_button.TabIndex = 12
-        self._background_color_button.Text = "Color picker"
-        self._background_color_button.UseVisualStyleBackColor = True
-        self._background_color_button.Click += self.get_color
-        # 
-        # background_color_preview
-        # 
-        self._background_color_preview.BackColor = System.Drawing.Color.White
-        self._background_color_preview.Location = System.Drawing.Point(115, 225)
-        self._background_color_preview.Name = "background_color_preview"
-        self._background_color_preview.Size = System.Drawing.Size(20, 20)
-        self._background_color_preview.TabIndex = 11
-        self._background_color_preview.BorderStyle = BorderStyle.FixedSingle
-        # 
-        # border_width_label
-        # 
-        self._border_width_label.Location = System.Drawing.Point(12, 330)
-        self._border_width_label.Name = "border_width_label"
-        self._border_width_label.Size = System.Drawing.Size(218, 17)
-        self._border_width_label.TabIndex = 15
-        self._border_width_label.Text = "Border Width (percentage of page width):"
-        # 
-        # right_to_left_label
-        # 
-        self._right_to_left_label.Location = System.Drawing.Point(12, 282)
-        self._right_to_left_label.Name = "right_to_left_label"
-        self._right_to_left_label.Size = System.Drawing.Size(80, 18)
-        self._right_to_left_label.TabIndex = 13
-        self._right_to_left_label.Text = "Right to Left:"
-        # 
-        # background_color_label
-        # 
-        self._background_color_label.Location = System.Drawing.Point(12, 229)
-        self._background_color_label.Name = "background_color_label"
-        self._background_color_label.Size = System.Drawing.Size(100, 13)
-        self._background_color_label.TabIndex = 10
-        self._background_color_label.Text = "Background color:"
-        # 
-        # right_to_left
-        # 
-        self._right_to_left.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        self._right_to_left.FormattingEnabled = True
-        self._right_to_left.Items.AddRange(System.Array[System.Object](["No","Yes",]))
-        self._right_to_left.Location = System.Drawing.Point(89, 279)
-        self._right_to_left.Name = "right_to_left"
-        self._right_to_left.Size = System.Drawing.Size(50, 21)
-        self._right_to_left.TabIndex = 14
-        self._right_to_left.SelectedItem = "No"
-        # 
-        # border_width
-        # 
-        self._border_width.Location = System.Drawing.Point(216, 328)
-        self._border_width.Name = "border_width"
-        self._border_width.Size = System.Drawing.Size(39, 20)
-        self._border_width.TabIndex = 16
-        self._border_width.Maximum = 100
-        # 
         # MainForm
         # 
         self.ClientSize = System.Drawing.Size(531, 414)
@@ -715,12 +525,6 @@ class WebComicHelperWizard(Form):
         self._wpFailedImage.ResumeLayout(False)
         self._wpFaliedLink.ResumeLayout(False)
         self._wpProgress.ResumeLayout(False)
-        self._wpCompositing.ResumeLayout(False)
-        self._columns.EndInit()
-        self._rows.EndInit()
-        self._height.EndInit()
-        self._width.EndInit()
-        self._border_width.EndInit()
         self.ResumeLayout(False)
 
 
@@ -759,7 +563,7 @@ class WebComicHelperWizard(Form):
             return
 
 
-        if self._wizard.Pages[e.OldIndex] == self._wpCompositing and self._wizard.Pages[e.NewIndex] == self._wpFinished:
+        if self._wizard.Pages[e.OldIndex] == self._wpInfo and self._wizard.Pages[e.NewIndex] == self._wpFinished:
             r = self.save_webcomic()
             if r:
                 return
@@ -883,17 +687,16 @@ class WebComicHelperWizard(Form):
         return info
 
 
-    def get_compositing(self):
+    def get_compositing(self, sender, e):
         
-        if self._use_columns_and_rows.Checked:
-            return WebComicCompositing(True, self._rows.Value, self._columns.Value, self._background_color_preview.BackColor, self._border_width.Value, self._right_to_left.SelectedItem)
-
-        return WebComicCompositing(False, self._height.Value, self._width.Value, self._background_color_preview.BackColor, self._border_width.Value, self._right_to_left.SelectedItem)
-
+        f = AdvancedDisplayOptionsDialog()
+        r = f.ShowDialog()
+        if r == DialogResult.OK:
+            self._compositing = f.get_display_options()
 
 
     def save_webcomic(self):
-        webcomic = WebComic(self.get_info(), self.get_compositing(), self._firstPageUrl.Text, self.result)
+        webcomic = WebComic(self.get_info(), self._compositing, self._firstPageUrl.Text, self.result)
         filepath = self.get_file_location()
         if not filepath:
             MessageBox.Show("A file path is required.", "Empty file path", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -922,6 +725,250 @@ class WebComicHelperWizard(Form):
             return ""
 
 
+
+class AdvancedDisplayOptionsDialog(Form):
+
+    def __init__(self):
+        self.SuspendLayout()
+        self._use_columns_and_rows = System.Windows.Forms.RadioButton()
+        self._use_height_and_width = System.Windows.Forms.RadioButton()
+        self._columns = System.Windows.Forms.NumericUpDown()
+        self._color_dialog = System.Windows.Forms.ColorDialog()
+        self._rows = System.Windows.Forms.NumericUpDown()
+        self._height = System.Windows.Forms.NumericUpDown()
+        self._width = System.Windows.Forms.NumericUpDown()
+        self._colums_label = System.Windows.Forms.Label()
+        self._rows_label = System.Windows.Forms.Label()
+        self._height_label = System.Windows.Forms.Label()
+        self._width_label = System.Windows.Forms.Label()
+        self._background_color_button = System.Windows.Forms.Button()
+        self._background_color_preview = System.Windows.Forms.Panel()
+        self._border_width_label = System.Windows.Forms.Label()
+        self._right_to_left_label = System.Windows.Forms.Label()
+        self._background_color_label = System.Windows.Forms.Label()
+        self._right_to_left = System.Windows.Forms.ComboBox()
+        self._border_width = System.Windows.Forms.NumericUpDown()
+        self._okay = System.Windows.Forms.Button()
+        self._cancel = System.Windows.Forms.Button()
+        # 
+        # use_columns_and_rows
+        # 
+        self._use_columns_and_rows.Checked = True
+        self._use_columns_and_rows.Location = System.Drawing.Point(12, 12)
+        self._use_columns_and_rows.Name = "use_columns_and_rows"
+        self._use_columns_and_rows.Size = System.Drawing.Size(175, 24)
+        self._use_columns_and_rows.TabIndex = 0
+        self._use_columns_and_rows.TabStop = True
+        self._use_columns_and_rows.Text = "Use columns and rows"
+        self._use_columns_and_rows.UseVisualStyleBackColor = True
+        self._use_columns_and_rows.CheckedChanged += self.change_composite_method
+        # 
+        # use_height_and_width
+        # 
+        self._use_height_and_width.Location = System.Drawing.Point(12, 78)
+        self._use_height_and_width.Name = "use_height_and_width"
+        self._use_height_and_width.Size = System.Drawing.Size(300, 24)
+        self._use_height_and_width.TabIndex = 5
+        self._use_height_and_width.Text = "Use height and width (use only if absolutely required)"
+        self._use_height_and_width.UseVisualStyleBackColor = True
+        self._use_height_and_width.CheckedChanged += self.change_composite_method
+        # 
+        # columns
+        # 
+        self._columns.Location = System.Drawing.Point(115, 42)
+        self._columns.Name = "columns"
+        self._columns.Size = System.Drawing.Size(38, 20)
+        self._columns.TabIndex = 2
+        self._columns.Minimum = 1
+        # 
+        # rows
+        # 
+        self._rows.Location = System.Drawing.Point(259, 42)
+        self._rows.Name = "rows"
+        self._rows.Size = System.Drawing.Size(38, 20)
+        self._rows.TabIndex = 4
+        self._rows.Minimum = 1
+        # 
+        # height
+        # 
+        self._height.Location = System.Drawing.Point(143, 108)
+        self._height.Maximum = 10000
+        self._height.Name = "height"
+        self._height.Size = System.Drawing.Size(72, 20)
+        self._height.TabIndex = 7
+        self._height.Enabled = False
+        # 
+        # width
+        # 
+        self._width.Location = System.Drawing.Point(342, 108)
+        self._width.Maximum = 10000
+        self._width.Name = "width"
+        self._width.Size = System.Drawing.Size(72, 20)
+        self._width.TabIndex = 9
+        self._width.Enabled = False
+        # 
+        # colums_label
+        # 
+        self._colums_label.Location = System.Drawing.Point(56, 44)
+        self._colums_label.Name = "colums_label"
+        self._colums_label.Size = System.Drawing.Size(53, 18)
+        self._colums_label.TabIndex = 1
+        self._colums_label.Text = "Columns:"
+        # 
+        # rows_label
+        # 
+        self._rows_label.Location = System.Drawing.Point(215, 44)
+        self._rows_label.Name = "rows_label"
+        self._rows_label.Size = System.Drawing.Size(40, 18)
+        self._rows_label.TabIndex = 3
+        self._rows_label.Text = "Rows:"
+        # 
+        # height_label
+        # 
+        self._height_label.Location = System.Drawing.Point(56, 110)
+        self._height_label.Name = "height_label"
+        self._height_label.Size = System.Drawing.Size(81, 17)
+        self._height_label.TabIndex = 6
+        self._height_label.Text = "Height (pixels):"
+        self._height_label.Enabled = False
+        # 
+        # width_label
+        # 
+        self._width_label.Location = System.Drawing.Point(259, 110)
+        self._width_label.Name = "width_label"
+        self._width_label.Size = System.Drawing.Size(77, 18)
+        self._width_label.TabIndex = 8
+        self._width_label.Text = "Width (pixels):"
+        self._width_label.Enabled = False
+        # 
+        # background_color_button
+        # 
+        self._background_color_button.Location = System.Drawing.Point(141, 158)
+        self._background_color_button.Name = "background_color_button"
+        self._background_color_button.Size = System.Drawing.Size(75, 23)
+        self._background_color_button.TabIndex = 12
+        self._background_color_button.Text = "Color picker"
+        self._background_color_button.UseVisualStyleBackColor = True
+        self._background_color_button.Click += self.get_color
+        # 
+        # background_color_preview
+        # 
+        self._background_color_preview.BackColor = System.Drawing.Color.White
+        self._background_color_preview.Location = System.Drawing.Point(115, 159)
+        self._background_color_preview.Name = "background_color_preview"
+        self._background_color_preview.Size = System.Drawing.Size(20, 20)
+        self._background_color_preview.TabIndex = 11
+        self._background_color_preview.BorderStyle = BorderStyle.FixedSingle
+        # 
+        # border_width_label
+        # 
+        self._border_width_label.Location = System.Drawing.Point(12, 264)
+        self._border_width_label.Name = "border_width_label"
+        self._border_width_label.Size = System.Drawing.Size(218, 17)
+        self._border_width_label.TabIndex = 15
+        self._border_width_label.Text = "Border Width (percentage of page width):"
+        # 
+        # right_to_left_label
+        # 
+        self._right_to_left_label.Location = System.Drawing.Point(12, 216)
+        self._right_to_left_label.Name = "right_to_left_label"
+        self._right_to_left_label.Size = System.Drawing.Size(80, 18)
+        self._right_to_left_label.TabIndex = 13
+        self._right_to_left_label.Text = "Right to Left:"
+        # 
+        # background_color_label
+        # 
+        self._background_color_label.Location = System.Drawing.Point(12, 163)
+        self._background_color_label.Name = "background_color_label"
+        self._background_color_label.Size = System.Drawing.Size(100, 13)
+        self._background_color_label.TabIndex = 10
+        self._background_color_label.Text = "Background color:"
+        # 
+        # right_to_left
+        # 
+        self._right_to_left.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        self._right_to_left.FormattingEnabled = True
+        self._right_to_left.Items.AddRange(System.Array[System.Object](["No","Yes",]))
+        self._right_to_left.Location = System.Drawing.Point(89, 213)
+        self._right_to_left.Name = "right_to_left"
+        self._right_to_left.Size = System.Drawing.Size(50, 21)
+        self._right_to_left.TabIndex = 14
+        self._right_to_left.SelectedItem = "No"
+        # 
+        # border_width
+        # 
+        self._border_width.Location = System.Drawing.Point(216, 262)
+        self._border_width.Name = "border_width"
+        self._border_width.Size = System.Drawing.Size(39, 20)
+        self._border_width.TabIndex = 16
+        self._border_width.Maximum = 100
+        # 
+        # cancel
+        # 
+        self._cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        self._cancel.Location = System.Drawing.Point(447, 297)
+        self._cancel.Name = "cancel"
+        self._cancel.Size = System.Drawing.Size(75, 23)
+        self._cancel.TabIndex = 18
+        self._cancel.Text = "Cancel"
+        self._cancel.UseVisualStyleBackColor = True
+        # 
+        # okay
+        # 
+        self._okay.DialogResult = System.Windows.Forms.DialogResult.OK
+        self._okay.Location = System.Drawing.Point(366, 297)
+        self._okay.Name = "okay"
+        self._okay.Size = System.Drawing.Size(75, 23)
+        self._okay.TabIndex = 17
+        self._okay.Text = "OK"
+        self._okay.UseVisualStyleBackColor = True
+        #
+        self.Controls.Add(self._border_width)
+        self.Controls.Add(self._right_to_left)
+        self.Controls.Add(self._background_color_label)
+        self.Controls.Add(self._right_to_left_label)
+        self.Controls.Add(self._border_width_label)
+        self.Controls.Add(self._background_color_preview)
+        self.Controls.Add(self._background_color_button)
+        self.Controls.Add(self._width_label)
+        self.Controls.Add(self._height_label)
+        self.Controls.Add(self._rows_label)
+        self.Controls.Add(self._colums_label)
+        self.Controls.Add(self._width)
+        self.Controls.Add(self._height)
+        self.Controls.Add(self._rows)
+        self.Controls.Add(self._columns)
+        self.Controls.Add(self._use_height_and_width)
+        self.Controls.Add(self._use_columns_and_rows)
+        self.Controls.Add(self._okay)
+        self.Controls.Add(self._cancel)
+        self.Text = "Choose how the webcomic images are displayed"
+        self.Size = System.Drawing.Size(550, 370)
+        self.ShowIcon = False
+        self.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        self.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
+        self.MinimizeBox = False
+        self.MaximizeBox = False
+        self.ResumeLayout(False)
+        self.AcceptButton = self._okay
+        self.CancelButton = self._cancel
+
+
+    def get_color(self, sender, e):
+        """Shows a color picker dialog and if a new color is chosen, sets the background color of the panel preview to the new color."""
+        result = self._color_dialog.ShowDialog()
+        if result == DialogResult.OK:
+            self._background_color_preview.BackColor = self._color_dialog.Color
+
+
+    def get_display_options(self):
+        
+        if self._use_columns_and_rows.Checked:
+            return WebComicCompositing(True, self._rows.Value, self._columns.Value, self._background_color_preview.BackColor, self._border_width.Value, self._right_to_left.SelectedItem)
+
+        return WebComicCompositing(False, self._height.Value, self._width.Value, self._background_color_preview.BackColor, self._border_width.Value, self._right_to_left.SelectedItem)
+
+
     def change_composite_method(self, sender, e):
         """Changes which controls are enabled when a compositing radio is checked."""
         self._rows.Enabled = self._use_columns_and_rows.Checked
@@ -933,10 +980,3 @@ class WebComicHelperWizard(Form):
         self._height_label.Enabled = self._use_height_and_width.Checked
         self._width.Enabled = self._use_height_and_width.Checked
         self._width_label.Enabled = self._use_height_and_width.Checked
-
-
-    def get_color(self, sender, e):
-        """Shows a color picker dialog and if a new color is chosen, sets the background color of the panel preview to the new color."""
-        result = self._color_dialog.ShowDialog()
-        if result == DialogResult.OK:
-            self._background_color_preview.BackColor = self._color_dialog.Color

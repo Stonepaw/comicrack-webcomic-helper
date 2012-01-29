@@ -1,0 +1,2 @@
+Added Compositing features
+Added templates for MangaHere and Submanga

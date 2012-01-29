@@ -103,6 +103,7 @@ class WebComic(object):
         self._image_regex = helper_result._image_regex
         self._link_regex = helper_result._link_regex
 
+
     def SaveToXml(self, filepath):
         """Saves the cbw file to the filepath
         filepath should be the complete path to a cbw file
@@ -120,11 +121,13 @@ class WebComic(object):
         with xmlwriter:
             xmlwriter.WriteStartElement("WebComic")
             self._write_info(xmlwriter)
-            self._compositing.write_to_xml(xmlwriter)
+            if self._compositing is not None:
+                self._compositing.write_to_xml(xmlwriter)
             self._write_regex(xmlwriter)
             xmlwriter.WriteEndElement()
 
         return True
+
 
     def _write_info(self, xmlwriter):
         """Writes the info portion of the cbw using the passed xmlwriter"""
