@@ -500,7 +500,7 @@ def check_created_image_regex(first_image_url, second_image_url, regex):
 
 
 def escape_regex_characters(string):
-
+    #TODO:Replace with System.Text.RegualrExpressions.Regex.Escape
     string = string.replace("\\", "\\\\")
     string = string.replace("^", "\\^")
     string = string.replace("$", "\\$")
@@ -595,6 +595,28 @@ def create_next_link_regx_with_text(text):
     link._matches = matches
 
     return link
+
+
+def create_next_link_regex_from_css_attribute(third_page_url):
+    """
+    Creates a next link regex by trying to find the closest css id or class and using that to find the page link.
+
+    third_page_url->The url of the third comic page
+    """
+    if debug: print "Trying to create a next page link regex with css attributes:\n"
+
+    #First try and find the class or id for the link
+
+    #First we need the realtive url of the second page
+    relative_second_page_url = first_page_uri.MakeRealtiveUri(second_page_uri).OriginalString
+
+    relative_second_page_url = relative_second_page_url.lstrip("/")
+
+    relative_second_page_url = Regex.Escape(relative_second_page_url)
+
+    if debug: print "Trying to find the class/id with relative url: %s" % (relative_second_page_url)
+
+    regex = "href\\s?=\\s?\"?/?" + relative_second_page_url + ".*?(?<class>(?:id|class)\\s?=\\s?(?(['\"])[\"'][^\"']+[\"']|[^\\s<>]+))"
 
 
 def check_created_link_regex(regex):
